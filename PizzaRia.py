@@ -92,7 +92,7 @@ def AuthSyst():
 Email: {UsData["email"]}""")
         choice = input("Это ваш аккаунт? (да / нет): ").lower()
         if choice in ["да", "д", "y", "yes"]:
-            print(f"Добро пожаловать, {UsData["name"]}!")
+            print(f"Добро пожаловать, {UsData['name']}!")
             return ClPhon, UsData["email"], UsData["name"]
 
     print("""
@@ -418,7 +418,7 @@ def SelectSize(SizChoice):
                 "category": ItemDat["category"]
             })
 
-            print(f"Добавлено: {ItemDat["name"]} {SizChoice} - {price} руб.")
+            print(f"Добавлено: {ItemDat['name']} {SizChoice} - {price} руб.")
             print("Нажмите 'С' для просмотра чека или продолжайте выбирать")
             SelectedItem = 0
             return True
@@ -442,7 +442,7 @@ def ShowReceipt():
           )
 
     for i, item in enumerate(OrderItems, 1):
-        print(f"{i}. {item["name"]} {item["size"]} - {item["price"]} руб.")
+        print(f"{i}. {item['name']} {item['size']} - {item['price']} руб.")
         total += item["price"]
 
     if OldOrNo == 1:  # налог для hjcks[ [hzrjd
