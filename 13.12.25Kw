@@ -1,0 +1,180 @@
+import random, time
+print("""
+
+""")
+NumList = 20
+MAX = 100
+Min = -100
+MAXth = 1000
+MinTh = 0
+Count = 0
+N = [random.randint(Min, MAX) for _ in range(NumList)]
+print("список от 100 до -100:", N)
+Nth = [random.randint(MinTh, MAXth) for _ in range(NumList)]
+print("список от  0 до  1000:", Nth)
+
+# задача «1» ————————————————————————————————————————————————————————————————————————————————————
+start1 = time.perf_counter()
+for i in range(len(N) - 1):
+    if N[i] + N[i + 1] > 0:
+        Count += 1
+
+end1 = time.perf_counter()
+elapsed_seconds1 = end1 - start1
+elapsed_ms1 = elapsed_seconds1 * 1000
+
+print("""
+задача «1» ————————————————————————————————————————————————————————————————————————————————————
+колл.ч пар положительных:  """, Count)
+print(f"время выполнения: {elapsed_ms1:.3f} миллисекунд")
+
+# задача «2» ————————————————————————————————————————————————————————————————————————————————————
+
+start2 = time.perf_counter()
+MaxSu = N[0] + N[1]
+for i in range(len(N) - 1):
+    if N[i] + N[i + 1] > MaxSu:
+        MaxSu = N[i] + N[i + 1]
+
+end2 = time.perf_counter()
+elapsed_seconds2 = end2 - start2
+elapsed_ms2 = elapsed_seconds2 * 1000
+
+print("""
+задача «2» ————————————————————————————————————————————————————————————————————————————————————
+MAX сумма двух подряд идущих:  """, MaxSu)
+print(f"время выполнения: {elapsed_ms2:.3f} миллисекунд")
+
+# задача «3» ————————————————————————————————————————————————————————————————————————————————————
+print("""
+задача «3» ————————————————————————————————————————————————————————————————————————————————————
+пары, где второе число больше первого:  
+""")
+
+start3 = time.perf_counter()
+for i in range(len(N) - 1):
+    if N[i + 1] > N[i]:
+        print(f"|— {N[i]} < {N[i+1]}")
+CouPar = sum(1 for i in range(len(N) - 1) if N[i + 1] > N[i])
+
+end3 = time.perf_counter()
+elapsed_seconds3 = end3 - start3
+elapsed_ms3 = elapsed_seconds3 * 1000
+
+print("""
+всего пар:   """, CouPar)
+print(f"время выполнения: {elapsed_ms3:.3f} миллисекунд")
+
+# задача «4» ————————————————————————————————————————————————————————————————————————————————————
+print("""
+задача «4» ————————————————————————————————————————————————————————————————————————————————————
+тройки, где все числа четные:            (внимание если ниже ничего нет то перезапустите код)
+""")
+
+start4 = time.perf_counter()
+triple_count = 0
+for i in range(len(Nth) - 2):
+    if Nth[i] % 2 == 0:
+        if Nth[i + 1] % 2 == 0:
+            if Nth[i + 2] % 2 == 0:
+                triple_count += 1
+                print(f"тройка {i}: [{Nth[i]}, {Nth[i+1]}, {Nth[i+2]}]")
+
+end4 = time.perf_counter()
+elapsed_seconds4 = end4 - start4
+elapsed_ms4 = elapsed_seconds4 * 1000
+
+print("""
+всего троек с четными числами:""", triple_count)
+print(f"время выполнения: {elapsed_ms4:.3f} миллисекунд")
+
+# задача «5» ————————————————————————————————————————————————————————————————————————————————————
+print("""
+задача «5» ————————————————————————————————————————————————————————————————————————————————————
+пары, где произведение положительно и дает остаток 2 при делении на 7:  
+(тупые методы)""")
+
+start5 = time.perf_counter()
+
+# Способ 1: Самый тупой - с кучей переменных и проверок
+count_pairs_method1 = 0
+print("\nСпособ 1: Развернутый тупой метод")
+for i in range(len(N) - 1):
+    a = N[i]
+    b = N[i + 1]
+    product = a * b
+    
+    # Проверка 1: произведение положительно
+    is_positive = product > 0
+    
+    # Проверка 2: остаток от деления на 7 равен 2
+    remainder = product % 7
+    has_remainder_2 = remainder == 2
+    
+    # Проверка 3: обе условия выполняются
+    if is_positive:
+        if has_remainder_2:
+            count_pairs_method1 += 1
+            print(f"  Пара {i}: ({a}, {b}) произведение = {product}")
+
+# Способ 2: Еще более тупой - с лишними вычислениями
+print("\nСпособ 2: С лишними вычислениями")
+count_pairs_method2 = 0
+for i in range(len(N) - 1):
+    a = N[i]
+    b = N[i + 1]
+    
+    # Вычисляем произведение разными способами (тупо)
+    product1 = a * b
+    product2 = b * a  # то же самое, но наоборот
+    product3 = (a + a) * b / 2 * 2  # избыточное вычисление
+    
+    # Проверяем разными способами
+    check1 = product1 > 0
+    check2 = product2 > 0
+    check3 = product3 > 0
+    
+    check4 = product1 % 7 == 2
+    check5 = product2 % 7 == 2
+    check6 = product3 % 7 == 2
+    
+    # Проверяем все комбинации (очень тупо)
+    if (check1 or check2 or check3) and (check4 or check5 or check6):
+        # Но на самом деле нужно точное условие
+        if product1 > 0 and product1 % 7 == 2:
+            count_pairs_method2 += 1
+
+# Способ 3: Тупо через if-elif-else
+print("\nСпособ 3: Через if-elif-else")
+count_pairs_method3 = 0
+for i in range(len(N) - 1):
+    prod = N[i] * N[i + 1]
+    
+    if prod > 0:
+        if prod % 7 == 2:
+            count_pairs_method3 += 1
+        else:
+            pass  # ничего не делаем
+    else:
+        if prod == 0:
+            pass  # ничего не делаем
+        else:
+            if prod < 0:
+                pass  # ничего не делаем
+            else:
+                pass  # никогда не выполнится
+
+end5 = time.perf_counter()
+elapsed_seconds5 = end5 - start5
+elapsed_ms5 = elapsed_seconds5 * 1000
+
+print(f"""
+Результаты:
+Способ 1: {count_pairs_method1} пар
+Способ 2: {count_pairs_method2} пар  
+Способ 3: {count_pairs_method3} пар
+
+Все способы дают одинаковый результат? {count_pairs_method1 == count_pairs_method2 == count_pairs_method3}
+
+Итоговое количество пар: {count_pairs_method1}
+время выполнения: {elapsed_ms5:.3f} миллисекунд""")
